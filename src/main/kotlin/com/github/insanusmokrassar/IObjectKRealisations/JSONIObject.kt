@@ -6,6 +6,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class JSONIObject(val root: JSONObject) : IObject<Any> {
+
+    constructor(json: String) : this(JSONObject(json))
+
     override fun put(key: String, value: Any) {
         root.put(key, value)
     }
@@ -18,15 +21,17 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
                 is JSONArray -> {
                     val result = ArrayList<Any>()
 
-
+                    for (current in value) {
+                        result.add(current)
+                    }
 
                     return result as T
                 }
             }
+            return value as T
         } catch (e: ClassCastException) {
             throw ReadException("Can't cast object to awaited type", e)
         }
-        return value as T
     }
 
     override fun keys(): Set<String> {
@@ -42,4 +47,10 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
     override fun remove(key: String) {
         root.remove(key)
     }
+
+    override fun toString(): String {
+        return root.toString()
+    }
+
+
 }

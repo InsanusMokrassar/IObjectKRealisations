@@ -22,6 +22,10 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
                     val result = ArrayList<Any>()
 
                     for (current in value) {
+                        if (current is JSONObject) {
+                            result.add(JSONIObject(current))
+                            continue
+                        }
                         result.add(current)
                     }
 

@@ -21,7 +21,8 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
                 is JSONArray -> {
                     val result = ArrayList<Any>()
 
-                    for (current in value) {
+                    for (i: Int in 0..value.length() - 1) {
+                        val current = value.get(i)
                         if (current is JSONObject) {
                             result.add(JSONIObject(current))
                             continue
@@ -39,7 +40,11 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
     }
 
     override fun keys(): Set<String> {
-        return root.keySet()
+        val result = HashSet<String>()
+        root.keys().forEach {
+            result.add(it as String)
+        }
+        return result
     }
 
     override fun putAll(toPutMap: Map<String, Any>) {

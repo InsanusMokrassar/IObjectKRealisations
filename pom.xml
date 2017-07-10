@@ -133,6 +133,13 @@
             <artifactId>json</artifactId>
             <version>20090211</version>
         </dependency>
-
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-insogroup-InsoGroupRepository</id>
+            <name>insogroup-InsoGroupRepository</name>
+            <url>https://api.bintray.com/maven/insogroup/InsoGroupRepository/IObjectKRealisations/;publish=1</url>
+        </repository>
+    </distributionManagement>
 </project>

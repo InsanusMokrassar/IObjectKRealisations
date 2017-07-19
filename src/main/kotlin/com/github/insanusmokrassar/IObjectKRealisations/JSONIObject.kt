@@ -4,10 +4,24 @@ import com.github.insanusmokrassar.iobjectk.exceptions.ReadException
 import com.github.insanusmokrassar.iobjectk.interfaces.IObject
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.InputStream
+import java.util.*
+import kotlin.NoSuchElementException
 
 class JSONIObject(val root: JSONObject) : IObject<Any> {
 
     constructor(json: String) : this(JSONObject(json))
+
+    constructor(inputStream: InputStream) : this({
+        val scanner = Scanner(inputStream)
+        val builder = StringBuilder()
+        try {
+            while (true) {
+                builder.append("${scanner.nextLine()}\n")
+            }
+        } catch (e: NoSuchElementException) {}
+        builder.toString()
+    }())
 
     override fun put(key: String, value: Any) {
         root.put(key, value)

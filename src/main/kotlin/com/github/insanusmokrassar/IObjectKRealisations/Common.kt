@@ -20,14 +20,14 @@ fun openFile(filePath: String): IObject<Any> {
         val file = FileInputStream(filePath)
         var resultException: Exception
         try {
-            return PropertiesIObject(file)
-        } catch (e: Exception) {
-            resultException = Exception("File $filePath can't be read as properties file: ${e.message}\n${e.stackTrace}", e)
-        }
-        try {
             return JSONIObject(file)
         } catch (e: Exception) {
-            resultException = Exception("File $filePath can't be read as json file: ${e.message}\n${e.stackTrace}", resultException)
+            resultException = Exception("File $filePath can't be read as json file: ${e.message}\n${e.stackTrace}", e)
+        }
+        try {
+            return PropertiesIObject(file)
+        } catch (e: Exception) {
+            resultException = Exception("File $filePath can't be read as properties file: ${e.message}\n${e.stackTrace}", resultException)
         }
         throw resultException
     } catch (e: Exception) {

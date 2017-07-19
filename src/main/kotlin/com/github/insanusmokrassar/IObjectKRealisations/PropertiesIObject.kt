@@ -13,7 +13,7 @@ class PropertiesIObject : IObject<Any> {
     protected val properties: Properties
     protected val keys: MutableSet<String> = HashSet()
 
-    public constructor(propertyFilePath: String) {
+    constructor(propertyFilePath: String) {
         val inputStream = FileInputStream(File(propertyFilePath))
         properties = Properties()
         properties.load(inputStream)
@@ -22,14 +22,14 @@ class PropertiesIObject : IObject<Any> {
         }
     }
 
-    public constructor(propertiesFile: Properties) {
+    constructor(propertiesFile: Properties) {
         this.properties = propertiesFile
         properties.keys.forEach {
             keys.add(it.toString())
         }
     }
 
-    public constructor(propertiesInputStream: InputStream) {
+    constructor(propertiesInputStream: InputStream) {
         properties = Properties()
         properties.load(propertiesInputStream)
         properties.keys.forEach {

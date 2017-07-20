@@ -3,6 +3,7 @@ package com.github.insanusmokrassar.IObjectKRealisations
 import com.github.insanusmokrassar.iobjectk.exceptions.ReadException
 import com.github.insanusmokrassar.iobjectk.interfaces.IObject
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import java.io.InputStream
 import java.util.*
@@ -28,8 +29,8 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
     }
 
     override fun <T : Any> get(key: String): T {
-        val value = root[key]
         try {
+            val value = root[key]
             when (value) {
                 is JSONObject -> return JSONIObject(value) as T
                 is JSONArray -> {
@@ -50,6 +51,8 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
             return value as T
         } catch (e: ClassCastException) {
             throw ReadException("Can't cast object to awaited type", e)
+        } catch (e: JSONException) {
+            throw ReadException("Can't find value for $key", e)
         }
     }
 

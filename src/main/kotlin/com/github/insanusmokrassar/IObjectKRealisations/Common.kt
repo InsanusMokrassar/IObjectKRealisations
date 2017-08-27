@@ -1,9 +1,8 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
-import com.github.insanusmokrassar.iobjectk.interfaces.IObject
+import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import org.json.JSONObject
 import java.io.FileInputStream
-import java.util.logging.Logger
 
 fun main(args: Array<String>) {
     val jsonObjectExample = JSONObject()

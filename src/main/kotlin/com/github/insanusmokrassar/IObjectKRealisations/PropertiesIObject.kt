@@ -1,7 +1,7 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
-import com.github.insanusmokrassar.iobjectk.exceptions.ReadException
-import com.github.insanusmokrassar.iobjectk.interfaces.IObject
+import com.github.insanusmokrassar.IObjectK.exceptions.ReadException
+import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream

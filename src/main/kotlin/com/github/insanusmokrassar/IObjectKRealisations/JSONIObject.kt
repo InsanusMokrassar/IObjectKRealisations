@@ -1,7 +1,7 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
-import com.github.insanusmokrassar.iobjectk.exceptions.ReadException
-import com.github.insanusmokrassar.iobjectk.interfaces.IObject
+import com.github.insanusmokrassar.IObjectK.exceptions.ReadException
+import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject

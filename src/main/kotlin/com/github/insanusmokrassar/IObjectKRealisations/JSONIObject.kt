@@ -33,20 +33,7 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
             val value = root[key]
             when (value) {
                 is JSONObject -> return JSONIObject(value) as T
-                is JSONArray -> {
-                    val result = ArrayList<Any>()
-
-                    for (i: Int in 0..value.length() - 1) {
-                        val current = value.get(i)
-                        if (current is JSONObject) {
-                            result.add(JSONIObject(current))
-                            continue
-                        }
-                        result.add(current)
-                    }
-
-                    return result as T
-                }
+                is JSONArray -> return value.toList() as T
             }
             return value as T
         } catch (e: ClassCastException) {
@@ -77,6 +64,19 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
     override fun toString(): String {
         return root.toString()
     }
+}
 
+fun JSONArray.toList(): List<Any> {
+    val result = ArrayList<Any>()
 
+    for (i: Int in 0 until length()) {
+        val current = get(i)
+        when (current) {
+            is JSONObject -> result.add(JSONIObject(current))
+            is JSONArray -> result.add(current.toList())
+            else -> result.add(current)
+        }
+    }
+
+    return result
 }

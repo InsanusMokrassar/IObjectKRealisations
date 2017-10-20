@@ -7,3 +7,9 @@
 # 1.4
 
 * Fix bug which related with getting list when iobject is jsonarray
+
+# 1.5
+
+* Add [toObject extension](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt) for all IInputObject's.
+* Add [toMap extension](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt) for all IInputObject's.
+* Add [toStringMap extension](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt) for all IInputObject's.

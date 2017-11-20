@@ -13,3 +13,8 @@
 * Add [toObject extension](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt) for all IInputObject's.
 * Add [toMap extension](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt) for all IInputObject's.
 * Add [toStringMap extension](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt) for all IInputObject's.
+
+# 1.6
+
+* Add [ObservableCommonIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/ObservableIObject.kt).
+Usage example in [Example class](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Example.kt).

@@ -7,12 +7,7 @@ fun main(args: Array<String>) {
     val jsonObjectExample = JSONObject()
     jsonObjectExample.put("Hello", "World")
     jsonObjectExample.put("InnerObject", JSONObject("{\"Inner hello\":\"World\"}"))
-    val jsonIObject = JSONIObject(jsonObjectExample).observable()
-    jsonIObject.observable.subscribe({
-        it.second ?. let { _ ->
-            println("Key: ${it.first}, Value: ${it.second}")
-        } ?: println("Value by key '${it.first}' deleted")
-    })
+    val jsonIObject = JSONIObject(jsonObjectExample)
     println(jsonIObject.toString())
     println(jsonIObject.get<IObject<Any>>("InnerObject").toString())
 

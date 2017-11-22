@@ -18,3 +18,8 @@
 
 * Add [ObservableCommonIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/ObservableIObject.kt).
 Usage example in [Example class](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Example.kt).
+
+# 1.7
+
+* Added in #1.6 version [ObservableCommonIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/ObservableIObject.kt)
+reverted - it will be replaced in another repository.

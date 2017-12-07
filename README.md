@@ -8,6 +8,7 @@
 * 1.6
 * 1.7
 * 1.7.1
+* 1.7.2-experimental
 
 ## Implementation
 

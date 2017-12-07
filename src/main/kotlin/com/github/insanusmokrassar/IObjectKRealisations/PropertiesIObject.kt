@@ -1,6 +1,5 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
-import com.github.insanusmokrassar.IObjectK.exceptions.ReadException
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import java.io.File
 import java.io.FileInputStream
@@ -9,9 +8,8 @@ import java.util.*
 import kotlin.collections.HashSet
 
 class PropertiesIObject : IObject<Any> {
+    private val properties: Properties
 
-    protected val properties: Properties
-    protected val keys: MutableSet<String> = HashSet()
 
     constructor(propertyFilePath: String) {
         val inputStream = FileInputStream(File(propertyFilePath))
@@ -37,6 +35,33 @@ class PropertiesIObject : IObject<Any> {
         }
     }
 
+    override val keys: MutableSet<String>
+        get() = mutableSetOf(*properties.keys.map { it.toString() }.toTypedArray())
+
+    override val entries: MutableSet<MutableMap.MutableEntry<String, Any>>
+        get() {
+            val set = HashSet<MutableMap.MutableEntry<String, Any>>()
+            keys.forEach {
+                set.add(MutableIObjectEntry(it, this))
+            }
+            return set
+        }
+    override val values: MutableCollection<Any>
+        get() {
+            val mutableCollection = ArrayList<Any>()
+
+            properties.keys().iterator().forEach {
+                properties[it.toString()] ?.let {
+                    mutableCollection.add(it)
+                }
+            }
+
+            return mutableCollection
+        }
+
+    override val size: Int
+        get() = properties.size
+
     override fun put(key: String, value: Any) {
         synchronized(this, {
             properties.put(key, value)
@@ -44,23 +69,13 @@ class PropertiesIObject : IObject<Any> {
         })
     }
 
-    override fun <T : Any> get(key: String): T {
-        try {
-            return properties[key] as T
-        } catch (e: ClassCastException) {
-            throw ReadException("Can't cast object to awaited type", e)
-        }
+    override fun <T : Any> getTyped(key: String): T? {
+        return properties[key] as? T
     }
 
-    override fun keys(): Set<String> {
+    override fun putAll(from: Map<out String, Any>) {
         synchronized(this, {
-            return keys
-        })
-    }
-
-    override fun putAll(toPutMap: Map<String, Any>) {
-        synchronized(this, {
-            toPutMap.forEach {
+            from.forEach {
                 properties.put(it.key, it.value)
                 keys.add(it.key)
             }
@@ -72,5 +87,17 @@ class PropertiesIObject : IObject<Any> {
             properties.remove(key)
             keys.remove(key)
         })
+    }
+
+    override fun containsKey(key: String): Boolean = properties.containsKey(key)
+
+    override fun containsValue(value: Any): Boolean = properties.containsValue(value)
+
+    override fun get(key: String): Any? = properties[key]
+
+    override fun isEmpty(): Boolean = properties.isEmpty
+
+    override fun clear() {
+        properties.clear()
     }
 }

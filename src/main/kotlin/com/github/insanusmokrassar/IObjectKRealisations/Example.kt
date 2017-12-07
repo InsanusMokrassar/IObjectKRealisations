@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
     jsonObjectExample.put("InnerObject", JSONObject("{\"Inner hello\":\"World\"}"))
     val jsonIObject = JSONIObject(jsonObjectExample)
     println(jsonIObject.toString())
-    println(jsonIObject.get<IObject<Any>>("InnerObject").toString())
+    println(jsonIObject["InnerObject"].toString())
 
     jsonIObject.putAll(
             mapOf(

@@ -1,6 +1,5 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
-import com.github.insanusmokrassar.IObjectK.exceptions.ReadException
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import org.json.JSONArray
 import org.json.JSONException
@@ -8,9 +7,10 @@ import org.json.JSONObject
 import java.io.InputStream
 import java.util.*
 import kotlin.NoSuchElementException
+import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
-class JSONIObject(val root: JSONObject) : IObject<Any> {
-
+class JSONIObject(private val root: JSONObject) : IObject<Any> {
     constructor(json: String) : this(JSONObject(json))
 
     constructor(inputStream: InputStream) : this({
@@ -24,41 +24,89 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
         builder.toString()
     }())
 
+
+    override val entries: MutableSet<MutableMap.MutableEntry<String, Any>>
+        get() {
+            val set = HashSet<MutableMap.MutableEntry<String, Any>>()
+            keys.forEach {
+                set.add(MutableIObjectEntry(it, this))
+            }
+            return set
+        }
+
+    override val keys: MutableSet<String>
+        get() {
+            val result = HashSet<String>()
+            root.keys().forEach {
+                it ?.let {
+                    result.add(it.toString())
+                }
+            }
+            return result
+        }
+
+    override val values: MutableCollection<Any>
+        get() {
+            val mutableCollection = ArrayList<Any>()
+
+            root.keys().forEach {
+                mutableCollection.add(root[it.toString()])
+            }
+
+            return mutableCollection
+        }
+
     override fun put(key: String, value: Any) {
         root.put(key, value)
     }
 
-    override fun <T : Any> get(key: String): T {
-        try {
-            val value = root[key]
-            when (value) {
-                is JSONObject -> return JSONIObject(value) as T
-                is JSONArray -> return value.toList() as T
-            }
-            return value as T
-        } catch (e: ClassCastException) {
-            throw ReadException("Can't cast object to awaited type", e)
-        } catch (e: JSONException) {
-            throw ReadException("Can't find value for $key", e)
+    override fun <T : Any> getTyped(key: String): T? {
+        val value = root[key]
+        when (value) {
+            is JSONObject -> return JSONIObject(value) as T
+            is JSONArray -> return value.toList() as T
         }
-    }
-
-    override fun keys(): Set<String> {
-        val result = HashSet<String>()
-        root.keys().forEach {
-            result.add(it as String)
-        }
-        return result
-    }
-
-    override fun putAll(toPutMap: Map<String, Any>) {
-        toPutMap.keys
-                .filter { toPutMap[it] != null }
-                .forEach { put(it, toPutMap[it]!!) }
+        return value as? T
     }
 
     override fun remove(key: String) {
         root.remove(key)
+    }
+
+    override val size: Int
+        get() = root.length()
+
+    override fun containsKey(key: String): Boolean = root.has(key)
+
+    override fun containsValue(value: Any): Boolean {
+        forEach {
+            if (it.value == value) {
+                return true
+            }
+        }
+        return false
+    }
+
+    override fun get(key: String): Any? {
+        return try {
+            root.get(key)
+        } catch (e: JSONException) {
+            null
+        }
+    }
+
+    override fun isEmpty(): Boolean = size == 0
+
+    override fun clear() {
+        keys.forEach {
+            root.remove(it)
+        }
+    }
+
+    override fun putAll(from: Map<out String, Any>) {
+        from.keys
+                .filter { from[it] != null }
+                .forEach { put(it, from[it]!!) }
     }
 
     override fun toString(): String {
@@ -69,8 +117,8 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
 fun JSONArray.toList(): List<Any> {
     val result = ArrayList<Any>()
 
-    for (i: Int in 0 until length()) {
-        val current = get(i)
+    (0 until length()).forEach {
+        val current = get(it)
         when (current) {
             is JSONObject -> result.add(JSONIObject(current))
             is JSONArray -> result.add(current.toList())

@@ -1,5 +1,6 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
+import com.github.insanusmokrassar.IObjectK.interfaces.IInputObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -8,21 +9,24 @@ import java.io.File
 
 private var gson: Gson? = null
 
-fun <K: Any, V: Any> Map<K, V>.toStringMap(): Map<String, String> {
-    val result = HashMap<String, String>()
-    keys.forEach {
-        result.put(it.toString(), get(it).toString())
+fun <K: Any, V: Any> IInputObject<K, V>.toMap(): Map<K, V> {
+    val result = HashMap<K, V>()
+    keys().forEach {
+        result.put(it, get(it))
     }
     return result
 }
 
-fun <T> Map<String, Any>.toObject(targetClass: Class<T>): T {
-    return gson ?. fromJson(
-            JSONObject(
-                    this
-            ).toString(),
-            targetClass
-    ) ?: {
+fun <K: Any, V: Any> IInputObject<K, V>.toStringMap(): Map<String, String> {
+    val result = HashMap<String, String>()
+    keys().forEach {
+        result.put(it.toString(), get<V>(it).toString())
+    }
+    return result
+}
+
+fun <T> IInputObject<String, out Any>.toObject(targetClass: Class<T>): T {
+    return gson?.fromJson(JSONObject(this.toMap()).toString(), targetClass) ?: {
         initGSON()
         toObject(targetClass)
     } ()

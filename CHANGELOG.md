@@ -27,7 +27,3 @@ Usage example in [Example class](src/main/kotlin/com/github/insanusmokrassar/IOb
 
 * Update dependencies
 * Update IObject to be compatible with v1.5 version
-
-# 1.7.2-experimental
-
-* Experimental version for IObjectK:1.6-experimental

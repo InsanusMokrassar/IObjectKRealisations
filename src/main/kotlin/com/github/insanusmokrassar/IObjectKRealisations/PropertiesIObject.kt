@@ -10,8 +10,11 @@ import kotlin.collections.HashSet
 
 class PropertiesIObject : IObject<Any> {
 
-    protected val properties: Properties
-    protected val keys: MutableSet<String> = HashSet()
+    private val properties: Properties
+    private val keys: MutableSet<String> = HashSet()
+
+    override val size: Int
+        get() = properties.size
 
     constructor(propertyFilePath: String) {
         val inputStream = FileInputStream(File(propertyFilePath))

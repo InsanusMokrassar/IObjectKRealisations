@@ -11,6 +11,9 @@ import kotlin.NoSuchElementException
 
 class JSONIObject(val root: JSONObject) : IObject<Any> {
 
+    override val size: Int
+        get() = root.length()
+
     constructor(json: String) : this(JSONObject(json))
 
     constructor(inputStream: InputStream) : this({

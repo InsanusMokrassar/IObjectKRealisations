@@ -27,3 +27,10 @@ Usage example in [Example class](src/main/kotlin/com/github/insanusmokrassar/IOb
 
 * Update dependencies
 * Update IObject to be compatible with v1.5 version
+
+# 1.8
+
+* Update version of kotlin
+* Update version of IObject
+* Override `val size` in [JSONIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/JSONIObject.kt) 
+and [PropertiesIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/PropertiesIObject.kt).

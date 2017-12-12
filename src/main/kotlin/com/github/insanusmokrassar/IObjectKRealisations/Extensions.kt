@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import org.json.JSONObject
 import java.io.File
+import java.io.InputStream
 
 private var gson: Gson? = null
 
@@ -42,23 +43,22 @@ fun Any.toIObject(): IObject<Any> {
 }
 
 @Throws(IllegalArgumentException::class)
-fun File.readIObject(): IObject<Any> {
+fun InputStream.readIObject(): IObject<Any> {
     try {
-        val file = inputStream()
         var resultException: Exception
         try {
-            return JSONIObject(file)
+            return JSONIObject(this)
         } catch (e: Exception) {
-            resultException = Exception("File $absolutePath can't be read as json file: ${e.message}\n${e.stackTrace}", e)
+            resultException = Exception("Input stream $this can't be read as json: ${e.message}\n${e.stackTrace}", e)
         }
         try {
-            return PropertiesIObject(file)
+            return PropertiesIObject(this)
         } catch (e: Exception) {
-            resultException = Exception("File $absolutePath can't be read as properties file: ${e.message}\n${e.stackTrace}", resultException)
+            resultException = Exception("Input stream $this can't be read as properties: ${e.message}\n${e.stackTrace}", resultException)
         }
         throw resultException
     } catch (e: Exception) {
-        throw IllegalArgumentException("For some of reason can't read file", e)
+        throw IllegalArgumentException("For some of reason can't read input stream $this", e)
     }
 }
 

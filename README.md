@@ -20,26 +20,26 @@
 <dependency>
     <groupId>com.github.insanusmokrassar</groupId>
     <artifactId>IObjectKRealisations</artifactId>
-    <version>1.7.1</version>
+    <version>1.8.2</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```
-compile 'com.github.insanusmokrassar:IObjectKRealisations:1.7.1'
+compile 'com.github.insanusmokrassar:IObjectKRealisations:1.8.2'
 ```
 
 #### Gradle (newest version)
 
 ```
-implementation 'com.github.insanusmokrassar:IObjectKRealisations:1.7.1'
+implementation 'com.github.insanusmokrassar:IObjectKRealisations:1.8.2'
 ```
 
 #### Gradle (android)
 
 ```
-implementation ('com.github.insanusmokrassar:IObjectKRealisations:1.7', {
+implementation ('com.github.insanusmokrassar:IObjectKRealisations:1.8.2', {
     exclude group: 'org.json', module: 'json'
 })
 ```

@@ -5,7 +5,6 @@ import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import org.json.JSONObject
-import java.io.File
 import java.io.InputStream
 
 private var gson: Gson? = null
@@ -27,18 +26,14 @@ fun <K: Any, V: Any> IInputObject<K, V>.toStringMap(): Map<String, String> {
 }
 
 fun <T> IInputObject<String, out Any>.toObject(targetClass: Class<T>): T {
-    return gson?.fromJson(JSONObject(this.toMap()).toString(), targetClass) ?: {
-        initGSON()
-        toObject(targetClass)
-    } ()
+    return doUsingDefaultGSON {
+        it.fromJson(JSONObject(this.toMap()).toString(), targetClass)
+    }
 }
 
 fun Any.toIObject(): IObject<Any> {
-    return try {
-        JSONIObject(gson!!.toJson(this))
-    } catch (e: NullPointerException) {
-        initGSON()
-        toIObject()
+    return doUsingDefaultGSON {
+        JSONIObject(it.toJson(this))
     }
 }
 
@@ -60,6 +55,13 @@ fun InputStream.readIObject(): IObject<Any> {
     } catch (e: Exception) {
         throw IllegalArgumentException("For some of reason can't read input stream $this", e)
     }
+}
+
+fun <R> doUsingDefaultGSON(callback: (Gson) -> R) : R {
+    return gson ?.let (callback) ?: {
+        initGSON()
+        doUsingDefaultGSON(callback)
+    }()
 }
 
 private fun initGSON() {

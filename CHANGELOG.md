@@ -39,3 +39,8 @@ and [PropertiesIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKReal
 
 * Now you can read IObject from any InputStream
 ([InputStream.readIObject()](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt))
+
+# 1.8.2
+
+* Add method [`doUsingDefaultGSON`](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt) and
+rewrite methods which using GSON.

@@ -34,3 +34,8 @@ Usage example in [Example class](src/main/kotlin/com/github/insanusmokrassar/IOb
 * Update version of IObject
 * Override `val size` in [JSONIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/JSONIObject.kt) 
 and [PropertiesIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/PropertiesIObject.kt).
+
+# 1.8.1
+
+* Now you can read IObject from any InputStream
+([InputStream.readIObject()](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt))

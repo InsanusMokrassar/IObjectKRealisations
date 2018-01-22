@@ -19,9 +19,9 @@ fun main(args: Array<String>) {
             )
     )
 
-    jsonIObject.put("Example", "Example")
-    jsonIObject.put("Example", 2)
-    jsonIObject.put("Example", true)
+    jsonIObject["Example"] = "Example"
+    jsonIObject["Example"] = 2
+    jsonIObject["Example"] = true
 
     jsonIObject.remove("Example")
 }

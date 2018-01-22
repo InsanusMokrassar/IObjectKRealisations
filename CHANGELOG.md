@@ -44,3 +44,8 @@ and [PropertiesIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKReal
 
 * Add method [`doUsingDefaultGSON`](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt) and
 rewrite methods which using GSON.
+
+# 1.9.0
+
+* Update kotlin 1.2.0 -> 1.2.20
+* Update IObjectK 1.6 -> 1.8

@@ -11,6 +11,7 @@
 * 1.8
 * 1.8.1
 * 1.8.2
+* 1.9.0
 
 ## Implementation
 
@@ -20,14 +21,14 @@
 <dependency>
     <groupId>com.github.insanusmokrassar</groupId>
     <artifactId>IObjectKRealisations</artifactId>
-    <version>1.8.2</version>
+    <version>1.9.0</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```
-compile 'com.github.insanusmokrassar:IObjectKRealisations:1.8.2'
+compile 'com.github.insanusmokrassar:IObjectKRealisations:1.9.0'
 ```
 
 #### Gradle (newest version)

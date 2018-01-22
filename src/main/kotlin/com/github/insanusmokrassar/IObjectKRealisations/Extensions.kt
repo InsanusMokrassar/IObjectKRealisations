@@ -9,18 +9,10 @@ import java.io.InputStream
 
 private var gson: Gson? = null
 
-fun <K: Any, V: Any> IInputObject<K, V>.toMap(): Map<K, V> {
-    val result = HashMap<K, V>()
-    keys().forEach {
-        result.put(it, get(it))
-    }
-    return result
-}
-
 fun <K: Any, V: Any> IInputObject<K, V>.toStringMap(): Map<String, String> {
     val result = HashMap<String, String>()
     keys().forEach {
-        result.put(it.toString(), get<V>(it).toString())
+        result[it.toString()] = get<V>(it).toString()
     }
     return result
 }

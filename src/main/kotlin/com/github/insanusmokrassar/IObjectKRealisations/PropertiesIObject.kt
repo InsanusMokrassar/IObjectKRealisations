@@ -2,6 +2,7 @@ package com.github.insanusmokrassar.IObjectKRealisations
 
 import com.github.insanusmokrassar.IObjectK.exceptions.ReadException
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
+import com.github.insanusmokrassar.IObjectK.realisations.StandardIInputObjectIterator
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -40,9 +41,9 @@ class PropertiesIObject : IObject<Any> {
         }
     }
 
-    override fun put(key: String, value: Any) {
+    override fun set(key: String, value: Any) {
         synchronized(this, {
-            properties.put(key, value)
+            properties[key] = value
             keys.add(key)
         })
     }
@@ -76,4 +77,6 @@ class PropertiesIObject : IObject<Any> {
             keys.remove(key)
         })
     }
+
+    override fun iterator(): Iterator<Pair<String, Any>> = StandardIInputObjectIterator(this)
 }

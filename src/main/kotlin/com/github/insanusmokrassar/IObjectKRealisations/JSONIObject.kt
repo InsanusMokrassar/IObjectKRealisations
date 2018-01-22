@@ -2,6 +2,7 @@ package com.github.insanusmokrassar.IObjectKRealisations
 
 import com.github.insanusmokrassar.IObjectK.exceptions.ReadException
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
+import com.github.insanusmokrassar.IObjectK.realisations.StandardIInputObjectIterator
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -10,7 +11,6 @@ import java.util.*
 import kotlin.NoSuchElementException
 
 class JSONIObject(val root: JSONObject) : IObject<Any> {
-
     override val size: Int
         get() = root.length()
 
@@ -27,7 +27,7 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
         builder.toString()
     }())
 
-    override fun put(key: String, value: Any) {
+    override fun set(key: String, value: Any) {
         root.put(key, value)
     }
 
@@ -63,6 +63,8 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
     override fun remove(key: String) {
         root.remove(key)
     }
+
+    override fun iterator(): Iterator<Pair<String, Any>> = StandardIInputObjectIterator(this)
 
     override fun toString(): String {
         return root.toString()

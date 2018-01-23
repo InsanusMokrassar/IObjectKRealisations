@@ -49,3 +49,7 @@ rewrite methods which using GSON.
 
 * Update kotlin 1.2.0 -> 1.2.20
 * Update IObjectK 1.6 -> 1.8
+
+# 1.9.1
+
+* Update IObjectK 1.8 -> 1.9

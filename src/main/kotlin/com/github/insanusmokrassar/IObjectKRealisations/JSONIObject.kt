@@ -64,8 +64,6 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
         root.remove(key)
     }
 
-    override fun iterator(): Iterator<Pair<String, Any>> = StandardIInputObjectIterator(this)
-
     override fun toString(): String {
         return root.toString()
     }

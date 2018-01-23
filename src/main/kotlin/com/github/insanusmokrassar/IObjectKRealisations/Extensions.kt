@@ -1,5 +1,6 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
+import com.github.insanusmokrassar.IObjectK.extensions.asMap
 import com.github.insanusmokrassar.IObjectK.interfaces.IInputObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import com.google.gson.Gson
@@ -19,7 +20,7 @@ fun <K: Any, V: Any> IInputObject<K, V>.toStringMap(): Map<String, String> {
 
 fun <T> IInputObject<String, out Any>.toObject(targetClass: Class<T>): T {
     return doUsingDefaultGSON {
-        it.fromJson(JSONObject(this.toMap()).toString(), targetClass)
+        it.fromJson(JSONObject(this.asMap()).toString(), targetClass)
     }
 }
 

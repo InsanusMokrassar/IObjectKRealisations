@@ -77,6 +77,4 @@ class PropertiesIObject : IObject<Any> {
             keys.remove(key)
         })
     }
-
-    override fun iterator(): Iterator<Pair<String, Any>> = StandardIInputObjectIterator(this)
 }

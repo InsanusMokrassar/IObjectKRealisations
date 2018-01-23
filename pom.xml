@@ -6,7 +6,7 @@
 
     <groupId>com.github.insanusmokrassar</groupId>
     <artifactId>IObjectKRealisations</artifactId>
-    <version>1.9.0</version>
+    <version>1.9.1</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -202,7 +202,7 @@
         <dependency>
             <groupId>com.github.insanusmokrassar</groupId>
             <artifactId>IObjectK</artifactId>
-            <version>1.8</version>
+            <version>1.9</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

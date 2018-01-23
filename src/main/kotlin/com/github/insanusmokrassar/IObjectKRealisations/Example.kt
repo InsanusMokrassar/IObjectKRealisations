@@ -1,6 +1,8 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
+import com.github.insanusmokrassar.IObjectK.realisations.SimpleIObject
+import com.github.insanusmokrassar.IObjectK.utils.plus
 import org.json.JSONObject
 
 fun main(args: Array<String>) {
@@ -24,4 +26,10 @@ fun main(args: Array<String>) {
     jsonIObject["Example"] = true
 
     jsonIObject.remove("Example")
+
+    println(
+            jsonIObject + SimpleIObject().apply {
+                this["example"] = "exampleValue"
+            }
+    )
 }

@@ -59,3 +59,7 @@ rewrite methods which using GSON.
 ## 1.9.2
 
 * Add extensions for `GSONBuilder` for implementation correct [IInputObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt#72)
+
+## 1.9.3
+
+* Remove redundant `keys` from [PropertiesIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/PropertiesIObject.kt)

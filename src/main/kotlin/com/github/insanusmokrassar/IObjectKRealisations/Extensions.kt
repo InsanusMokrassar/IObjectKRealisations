@@ -1,10 +1,15 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
 import com.github.insanusmokrassar.IObjectK.extensions.asMap
+import com.github.insanusmokrassar.IObjectK.interfaces.CommonIObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IInputObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
+import com.github.insanusmokrassar.IObjectK.interfaces.IOutputObject
+import com.github.insanusmokrassar.IObjectK.realisations.SimpleCommonIObject
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
 import org.json.JSONObject
 import java.io.InputStream
 
@@ -58,5 +63,40 @@ fun <R> doUsingDefaultGSON(callback: (Gson) -> R) : R {
 }
 
 private fun initGSON() {
-    gson = GsonBuilder().create()
+    gson = GsonBuilder().run {
+        implementIInputObjectAdapter()
+        implementIOutputObjectAdapter()
+        implementCommonIObjectAdapter()
+        create()
+    }
+}
+
+fun GsonBuilder.implementIInputObjectAdapter() {
+    registerTypeHierarchyAdapter(
+            IInputObject::class.java,
+            JsonDeserializer<IInputObject<String, Any>> {
+                json, _, _ ->
+                JSONIObject(json.asJsonObject.toString())
+            }
+    )
+}
+
+fun GsonBuilder.implementIOutputObjectAdapter() {
+    registerTypeHierarchyAdapter(
+            IInputObject::class.java,
+            JsonDeserializer<IOutputObject<String, Any>> {
+                json, _, _ ->
+                JSONIObject(json.asJsonObject.toString())
+            }
+    )
+}
+
+fun GsonBuilder.implementCommonIObjectAdapter() {
+    registerTypeHierarchyAdapter(
+            IInputObject::class.java,
+            JsonDeserializer<CommonIObject<String, Any>> {
+                json, _, _ ->
+                JSONIObject(json.asJsonObject.toString())
+            }
+    )
 }

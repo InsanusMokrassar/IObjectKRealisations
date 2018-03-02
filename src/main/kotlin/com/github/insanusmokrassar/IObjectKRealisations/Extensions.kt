@@ -12,6 +12,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import org.json.JSONObject
 import java.io.InputStream
+import java.io.InputStreamReader
 
 private var gson: Gson? = null
 
@@ -39,13 +40,14 @@ fun Any.toIObject(): IObject<Any> {
 fun InputStream.readIObject(): IObject<Any> {
     try {
         var resultException: Exception
+        val streamText = InputStreamReader(this).readText()
         try {
-            return JSONIObject(this)
+            return JSONIObject(streamText)
         } catch (e: Exception) {
             resultException = Exception("Input stream $this can't be read as json: ${e.message}\n${e.stackTrace}", e)
         }
         try {
-            return PropertiesIObject(this)
+            return PropertiesIObject(streamText)
         } catch (e: Exception) {
             resultException = Exception("Input stream $this can't be read as properties: ${e.message}\n${e.stackTrace}", resultException)
         }

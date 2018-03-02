@@ -7,27 +7,17 @@ import java.io.FileInputStream
 import java.io.InputStream
 import java.util.*
 
-class PropertiesIObject : IObject<Any> {
-
-    private val properties: Properties
-
+class PropertiesIObject(private val properties: Properties) : IObject<Any> {
     override val size: Int
         get() = properties.size
 
-    constructor(propertyFilePath: String) {
-        val inputStream = FileInputStream(File(propertyFilePath))
-        properties = Properties()
-        properties.load(inputStream)
-    }
+    constructor(propertiesInputStream: InputStream): this(
+            Properties().apply {
+                load(propertiesInputStream)
+            }
+    )
 
-    constructor(propertiesFile: Properties) {
-        this.properties = propertiesFile
-    }
-
-    constructor(propertiesInputStream: InputStream) {
-        properties = Properties()
-        properties.load(propertiesInputStream)
-    }
+    constructor(propertyText: String): this(propertyText.byteInputStream())
 
     override fun set(key: String, value: Any) {
         synchronized(this, {

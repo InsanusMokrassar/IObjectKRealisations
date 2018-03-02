@@ -63,3 +63,4 @@ rewrite methods which using GSON.
 ## 1.9.3
 
 * Remove redundant `keys` from [PropertiesIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/PropertiesIObject.kt)
+* Fix constructors work in [PropertiesIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/PropertiesIObject.kt)

@@ -1,5 +1,6 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
+import com.github.insanusmokrassar.IObjectK.extensions.toJsonString
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import com.github.insanusmokrassar.IObjectK.realisations.SimpleIObject
 import com.github.insanusmokrassar.IObjectK.utils.plus
@@ -27,9 +28,19 @@ fun main(args: Array<String>) {
 
     jsonIObject.remove("Example")
 
-    println(
-            jsonIObject + SimpleIObject().apply {
-                this["example"] = "exampleValue"
-            }
-    )
+    (jsonIObject + SimpleIObject()).apply {
+        this["example"] = "exampleValue"
+        this["array"] = listOf(
+                "it",
+                "is",
+                "array",
+                4,
+                true,
+                Any()
+        )
+    }.apply {
+        println(this)
+        println(this.toJsonString())
+    }
+    println(jsonIObject.toJsonString())
 }

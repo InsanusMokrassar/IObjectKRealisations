@@ -1,16 +1,14 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
 import com.github.insanusmokrassar.IObjectK.extensions.asMap
+import com.github.insanusmokrassar.IObjectK.extensions.toJsonString
 import com.github.insanusmokrassar.IObjectK.interfaces.CommonIObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IInputObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IOutputObject
-import com.github.insanusmokrassar.IObjectK.realisations.SimpleCommonIObject
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
-import com.google.gson.JsonElement
-import org.json.JSONObject
 import java.io.InputStream
 import java.io.InputStreamReader
 
@@ -24,9 +22,9 @@ fun <K: Any, V: Any> IInputObject<K, V>.toStringMap(): Map<String, String> {
     return result
 }
 
-fun <T> IInputObject<String, out Any>.toObject(targetClass: Class<T>): T {
+fun <T> IInputObject<String, in Any>.toObject(targetClass: Class<T>): T {
     return doUsingDefaultGSON {
-        it.fromJson(JSONObject(this.asMap()).toString(), targetClass)
+        it.fromJson(this.toJsonString(), targetClass)
     }
 }
 

@@ -69,3 +69,7 @@ rewrite methods which using GSON.
 
 * Update dependencies
 * Fix [IInputString<String, in Any>#toObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt#25)
+
+## 1.10
+
+* Added [XMLIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/XMLIObject.kt) which represent SimpleIObject but must be built from XML.

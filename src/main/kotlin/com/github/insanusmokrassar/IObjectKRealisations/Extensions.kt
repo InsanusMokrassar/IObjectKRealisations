@@ -34,22 +34,31 @@ fun Any.toIObject(): IObject<Any> {
     }
 }
 
-@Throws(IllegalArgumentException::class)
+class ReadIObjectException(
+        val exceptions: List<Exception>
+) : Exception()
+
+@Throws(ReadIObjectException::class)
 fun InputStream.readIObject(): IObject<Any> {
     try {
-        var resultException: Exception
+        var resultExceptions = mutableListOf<Exception>()
         val streamText = InputStreamReader(this).readText()
         try {
             return JSONIObject(streamText)
         } catch (e: Exception) {
-            resultException = Exception("Input stream $this can't be read as json: ${e.message}\n${e.stackTrace}", e)
+            resultExceptions.add(Exception("Input stream $this can't be read as json: ${e.message}\n${e.stackTrace}", e))
+        }
+        try {
+            return XMLIObject(streamText)
+        } catch (e: Exception) {
+            resultExceptions.add(Exception("Input stream $this can't be read as xml: ${e.message}\n${e.stackTrace}"))
         }
         try {
             return PropertiesIObject(streamText)
         } catch (e: Exception) {
-            resultException = Exception("Input stream $this can't be read as properties: ${e.message}\n${e.stackTrace}", resultException)
+            resultExceptions.add(Exception("Input stream $this can't be read as properties: ${e.message}\n${e.stackTrace}"))
         }
-        throw resultException
+        throw ReadIObjectException(resultExceptions)
     } catch (e: Exception) {
         throw IllegalArgumentException("For some of reason can't read input stream $this", e)
     }

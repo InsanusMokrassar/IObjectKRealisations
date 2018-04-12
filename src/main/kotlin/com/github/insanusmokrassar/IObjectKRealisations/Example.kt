@@ -43,4 +43,8 @@ fun main(args: Array<String>) {
         println(this.toJsonString())
     }
     println(jsonIObject.toJsonString())
+
+    ClassLoader.getSystemResourceAsStream("example.xml").readIObject().apply {
+        println(toJsonString())
+    }
 }

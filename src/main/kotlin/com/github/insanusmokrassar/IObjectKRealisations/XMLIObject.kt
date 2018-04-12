@@ -1,6 +1,7 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
 import com.github.insanusmokrassar.IObjectK.exceptions.ReadException
+import com.github.insanusmokrassar.IObjectK.extensions.doRecursively
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import com.github.insanusmokrassar.IObjectK.interfaces.has
 import com.github.insanusmokrassar.IObjectK.realisations.SimpleIObject
@@ -10,7 +11,11 @@ import java.io.InputStream
 import java.util.*
 import javax.xml.parsers.SAXParserFactory
 
-private class SAXXmlParser : DefaultHandler() {
+private const val textKey = "text"
+
+private class SAXXmlParser(
+        private val wrap: Boolean = false
+) : DefaultHandler() {
 
     private val statesStack = Stack<IObject<Any>>()
     private var root: IObject<Any>? = null
@@ -55,10 +60,10 @@ private class SAXXmlParser : DefaultHandler() {
         statesStack.peek().apply {
             ch ?: return
             val newText = String(ch).substring(start until (start + length))
-            if (has("text")) {
-                set("text", "${get<String>("text")}$newText")
+            if (has(textKey)) {
+                set(textKey, "${get<String>(textKey)}$newText")
             } else {
-                set("text", newText)
+                set(textKey, newText)
             }
         }
     }
@@ -71,14 +76,35 @@ private class SAXXmlParser : DefaultHandler() {
     override fun endDocument() {
         super.endDocument()
         statesStack.pop()
+        if (wrap) {
+            root ?. doRecursively {
+                current ->
+                current.keys().forEach {
+                    try {
+                        current.get<IObject<Any>>(it).let {
+                            if (it.keys().size == 1 && it.has(textKey)) {
+                                it.get<String>(textKey)
+                            } else {
+                                null
+                            }
+                        } ?.let {
+                            value ->
+                            current[it] = value
+                        }
+                    } catch (e: ClassCastException) {
+
+                    }
+                }
+            }
+        }
         lastResult = root
         root = null
     }
 }
 
-class XMLIObject(inputStream: InputStream) : SimpleIObject(
+class XMLIObject(inputStream: InputStream, wrap: Boolean = false) : SimpleIObject(
         SAXParserFactory.newInstance().run {
-            val parser = SAXXmlParser()
+            val parser = SAXXmlParser(wrap)
             newSAXParser().parse(
                     inputStream,
                     parser
@@ -86,5 +112,5 @@ class XMLIObject(inputStream: InputStream) : SimpleIObject(
             parser.lastResult ?: throw IllegalArgumentException("Can't parse this xml")
         }
 ) {
-    constructor(xmlText: String): this(xmlText.byteInputStream())
+    constructor(xmlText: String, wrap: Boolean = false): this(xmlText.byteInputStream(), wrap)
 }

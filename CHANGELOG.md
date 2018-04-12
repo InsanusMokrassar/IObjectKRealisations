@@ -73,3 +73,7 @@ rewrite methods which using GSON.
 ## 1.10
 
 * Added [XMLIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/XMLIObject.kt) which represent SimpleIObject but must be built from XML.
+
+## 1.10.1
+
+* Added possibility to wrap `text` of [XMLIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/XMLIObject.kt)

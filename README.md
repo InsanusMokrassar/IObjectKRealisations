@@ -18,6 +18,7 @@
     * 1.9.4
 * 1.10
     * 1.10.1
+    * 1.10.2
 
 ## Implementation
 
@@ -27,26 +28,26 @@
 <dependency>
     <groupId>com.github.insanusmokrassar</groupId>
     <artifactId>IObjectKRealisations</artifactId>
-    <version>1.10.1</version>
+    <version>1.10.2</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```
-compile 'com.github.insanusmokrassar:IObjectKRealisations:1.10.1'
+compile 'com.github.insanusmokrassar:IObjectKRealisations:1.10.2'
 ```
 
 #### Gradle (newest version)
 
 ```
-implementation 'com.github.insanusmokrassar:IObjectKRealisations:1.10.1'
+implementation 'com.github.insanusmokrassar:IObjectKRealisations:1.10.2'
 ```
 
 #### Gradle (android)
 
 ```
-implementation ('com.github.insanusmokrassar:IObjectKRealisations:1.10.1', {
+implementation ('com.github.insanusmokrassar:IObjectKRealisations:1.10.2', {
     exclude group: 'org.json', module: 'json'
 })
 ```

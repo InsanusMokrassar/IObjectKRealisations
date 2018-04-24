@@ -39,6 +39,11 @@ class ReadIObjectException(
 ) : Exception()
 
 @Throws(ReadIObjectException::class)
+fun String.readIObject(): IObject<Any> {
+    return byteInputStream().readIObject()
+}
+
+@Throws(ReadIObjectException::class)
 fun InputStream.readIObject(): IObject<Any> {
     try {
         var resultExceptions = mutableListOf<Exception>()

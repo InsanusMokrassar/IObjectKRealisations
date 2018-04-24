@@ -77,3 +77,9 @@ rewrite methods which using GSON.
 ## 1.10.1
 
 * Added possibility to wrap `text` of [XMLIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/XMLIObject.kt)
+
+## 1.10.2
+
+* Added [load(String)](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Utils.kt) which return IObject from
+file from resources or file system
+* Added [String#readIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt) which return IObject 

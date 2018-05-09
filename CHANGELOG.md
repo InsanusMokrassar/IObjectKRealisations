@@ -83,3 +83,7 @@ rewrite methods which using GSON.
 * Added [load(String)](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Utils.kt) which return IObject from
 file from resources or file system
 * Added [String#readIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt) which return IObject 
+
+## 1.10.3
+
+* Update work with `#toIObject` extension in [Extensions](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt)

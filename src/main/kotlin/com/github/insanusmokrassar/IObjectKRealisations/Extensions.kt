@@ -1,6 +1,5 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
-import com.github.insanusmokrassar.IObjectK.extensions.asMap
 import com.github.insanusmokrassar.IObjectK.extensions.toJsonString
 import com.github.insanusmokrassar.IObjectK.interfaces.CommonIObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IInputObject
@@ -33,10 +32,6 @@ fun Any.toIObject(): IObject<Any> {
         JSONIObject(it.toJson(this))
     }
 }
-
-class ReadIObjectException(
-        val exceptions: List<Exception>
-) : Exception()
 
 @Throws(ReadIObjectException::class)
 fun String.readIObject(): IObject<Any> {

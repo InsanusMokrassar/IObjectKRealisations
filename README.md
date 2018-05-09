@@ -1,4 +1,4 @@
-# IObjectKRealisations
+# `IObject`KRealisations
 
 ## Available versions
 
@@ -19,6 +19,30 @@
 * 1.10
     * 1.10.1
     * 1.10.2
+
+## Description
+
+This library was developed as realisations library for project [IObjectK](https://github.com/InsanusMokrassar/IObjectK).
+
+Here you can found realisations for
+
+* [JSONIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/JSONIObject.kt)
+* [PropertiesIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/PropertiesIObject.kt)
+* [XMLIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/XMLIObject.kt)
+(if be honest, it is just converter xml-to-simpleiobject)
+
+Besides, in this library you can find useful utils for work with `IObject`s such as
+
+* [Common extensions](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt)
+    * Converters from/to `IObject` from
+        * String
+        * InputStream
+    * `GSON` adapters for correct reading JSON objects
+* [Utils](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Utils.kt)
+    * Loading `IObject` from resources/files (first of all from resources).
+
+In [Example](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Example.kt)
+you can found examples of using different types of realisations of `IObject`
 
 ## Implementation
 

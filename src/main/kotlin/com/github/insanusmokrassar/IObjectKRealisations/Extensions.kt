@@ -5,6 +5,7 @@ import com.github.insanusmokrassar.IObjectK.interfaces.CommonIObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IInputObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IOutputObject
+import com.github.insanusmokrassar.IObjectK.realisations.SimpleIObject
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
@@ -24,6 +25,19 @@ fun <K: Any, V: Any> IInputObject<K, V>.toStringMap(): Map<String, String> {
 fun <T> IInputObject<String, in Any>.toObject(targetClass: Class<T>): T {
     return doUsingDefaultGSON {
         it.fromJson(this.toJsonString(), targetClass)
+    }
+}
+
+fun String.toIObject(): IObject<Any> = readIObject()
+
+fun <K, V: Any> IInputObject<K, V>.toIObject(): IObject<Any> {
+    return SimpleIObject().also {
+        resultObject ->
+        keys().forEach {
+            it ?.let {
+                resultObject[it.toString()] = this[it]
+            }
+        }
     }
 }
 
@@ -66,13 +80,13 @@ fun InputStream.readIObject(): IObject<Any> {
 
 fun <R> doUsingDefaultGSON(callback: (Gson) -> R) : R {
     return gson ?.let (callback) ?: {
-        initGSON()
+        gson = initGSON()
         doUsingDefaultGSON(callback)
     }()
 }
 
-private fun initGSON() {
-    gson = GsonBuilder().run {
+fun initGSON(): Gson {
+    return GsonBuilder().run {
         implementIInputObjectAdapter()
         implementIOutputObjectAdapter()
         implementCommonIObjectAdapter()

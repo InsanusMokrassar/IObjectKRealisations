@@ -20,6 +20,7 @@
     * 1.10.1
     * 1.10.2
     * 1.10.3
+* 1.11
 
 ## Description
 
@@ -53,26 +54,26 @@ you can found examples of using different types of realisations of `IObject`
 <dependency>
     <groupId>com.github.insanusmokrassar</groupId>
     <artifactId>IObjectKRealisations</artifactId>
-    <version>1.10.3</version>
+    <version>1.11</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```
-compile 'com.github.insanusmokrassar:IObjectKRealisations:1.10.3'
+compile 'com.github.insanusmokrassar:IObjectKRealisations:1.11'
 ```
 
 #### Gradle (newest version)
 
 ```
-implementation 'com.github.insanusmokrassar:IObjectKRealisations:1.10.3'
+implementation 'com.github.insanusmokrassar:IObjectKRealisations:1.11'
 ```
 
 #### Gradle (android)
 
 ```
-implementation ('com.github.insanusmokrassar:IObjectKRealisations:1.10.3', {
+implementation ('com.github.insanusmokrassar:IObjectKRealisations:1.11', {
     exclude group: 'org.json', module: 'json'
 })
 ```

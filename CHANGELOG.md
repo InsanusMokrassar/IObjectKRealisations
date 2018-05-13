@@ -87,3 +87,7 @@ file from resources or file system
 ## 1.10.3
 
 * Update work with `#toIObject` extension in [Extensions](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/Extensions.kt)
+
+## 1.11
+
+* Update version of IObjectK and optimize some operations

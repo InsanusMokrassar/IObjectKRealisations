@@ -30,6 +30,8 @@ class PropertiesIObject(private val properties: Properties) : IObject<Any> {
             return properties[key] as T
         } catch (e: ClassCastException) {
             throw ReadException("Can't cast object to awaited type", e)
+        } catch (e: Exception) {
+            throw ReadException("Can't get object by $key", e)
         }
     }
 

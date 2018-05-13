@@ -33,8 +33,7 @@ private class SAXXmlParser(
     override fun startElement(uri: String?, localName: String?, qName: String?, attributes: Attributes?) {
         super.startElement(uri, localName, qName, attributes)
         val currentObject = SimpleIObject()
-        val key = qName
-        key ?: return
+        val key = qName ?: return
         attributes ?: return
         statesStack.peek().let {
             if (it.has(key)) {

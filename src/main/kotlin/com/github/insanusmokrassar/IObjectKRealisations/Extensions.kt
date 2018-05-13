@@ -15,11 +15,11 @@ import java.io.InputStreamReader
 private var gson: Gson? = null
 
 fun <K: Any, V: Any> IInputObject<K, V>.toStringMap(): Map<String, String> {
-    val result = HashMap<String, String>()
-    keys().forEach {
-        result[it.toString()] = get<V>(it).toString()
-    }
-    return result
+    return mapOf(
+        *map {
+            it.first.toString() to it.second.toString()
+        }.toTypedArray()
+    )
 }
 
 fun <T> IInputObject<String, in Any>.toObject(targetClass: Class<T>): T {
@@ -33,10 +33,8 @@ fun String.toIObject(): IObject<Any> = readIObject()
 fun <K, V: Any> IInputObject<K, V>.toIObject(): IObject<Any> {
     return SimpleIObject().also {
         resultObject ->
-        keys().forEach {
-            it ?.let {
-                resultObject[it.toString()] = this[it]
-            }
+        forEach {
+            resultObject[it.first.toString()] = it.second
         }
     }
 }

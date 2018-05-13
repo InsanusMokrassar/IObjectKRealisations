@@ -1,6 +1,7 @@
 package com.github.insanusmokrassar.IObjectKRealisations
 
 import com.github.insanusmokrassar.IObjectK.exceptions.ReadException
+import com.github.insanusmokrassar.IObjectK.extensions.toJsonString
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import com.github.insanusmokrassar.IObjectK.realisations.StandardIInputObjectIterator
 import org.json.JSONArray
@@ -41,7 +42,7 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
             return value as T
         } catch (e: ClassCastException) {
             throw ReadException("Can't cast object to awaited type", e)
-        } catch (e: JSONException) {
+        } catch (e: Exception) {
             throw ReadException("Can't find value for $key", e)
         }
     }
@@ -57,7 +58,7 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
     override fun putAll(toPutMap: Map<String, Any>) {
         toPutMap.keys
                 .filter { toPutMap[it] != null }
-                .forEach { put(it, toPutMap[it]!!) }
+                .forEach { set(it, toPutMap[it]!!) }
     }
 
     override fun remove(key: String) {
@@ -65,7 +66,7 @@ class JSONIObject(val root: JSONObject) : IObject<Any> {
     }
 
     override fun toString(): String {
-        return root.toString()
+        return toJsonString()
     }
 }
 

@@ -6,7 +6,7 @@
 
     <groupId>com.github.insanusmokrassar</groupId>
     <artifactId>IObjectKRealisations</artifactId>
-    <version>1.11</version>
+    <version>1.11.1</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -35,6 +35,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.2.41</kotlin.version>
         <dokka.version>0.9.16</dokka.version>
+        <gson.version>2.8.5</gson.version>
         <gpg.version>1.6</gpg.version>
         <gpg.passphraseServerId>bintray-insanusmokrassar-StandardRepository</gpg.passphraseServerId>
         <main.class>com.github.insanusmokrassar.${project.artifactId}.ExampleKt</main.class>
@@ -196,7 +197,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.1</version>
+            <version>${gson.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -95,3 +95,5 @@ file from resources or file system
 ## 1.11.1
 
 * Add operations to convert directly JSON into object and object into JSON.
+* Remove `org.json` dependency and `JSONIObject`. Now for creating IObject from string just use `String#readIObject`
+or `String#toIObject`

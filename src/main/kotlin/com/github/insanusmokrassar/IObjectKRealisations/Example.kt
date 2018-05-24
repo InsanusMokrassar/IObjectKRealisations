@@ -7,8 +7,8 @@ import com.github.insanusmokrassar.IObjectK.utils.plus
 
 fun main(args: Array<String>) {
     val jsonIObject = ClassLoader.getSystemResourceAsStream("example.json").readIObject()
-    println(jsonIObject.toString())
-    println(jsonIObject.get<IObject<Any>>("exampleInner").toString())
+    println(jsonIObject)
+    println(jsonIObject.get<IObject<Any>>("exampleInner"))
 
     jsonIObject.putAll(
             mapOf(
@@ -40,8 +40,10 @@ fun main(args: Array<String>) {
     }
     println(jsonIObject.toJsonString())
 
-    ClassLoader.getSystemResourceAsStream("example.xml").readIObject().let {
-        println(it)
-        println(it.toJsonString())
+    ClassLoader.getSystemResourceAsStream("example.xml").use {
+        it.readIObject().let {
+            println(it)
+            println(it.toJsonString())
+        }
     }
 }

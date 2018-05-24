@@ -70,11 +70,3 @@ compile 'com.github.insanusmokrassar:IObjectKRealisations:1.11.1'
 ```
 implementation 'com.github.insanusmokrassar:IObjectKRealisations:1.11.1'
 ```
-
-#### Gradle (android)
-
-```
-implementation ('com.github.insanusmokrassar:IObjectKRealisations:1.11.1', {
-    exclude group: 'org.json', module: 'json'
-})
-```

@@ -30,6 +30,17 @@ fun <T> IInputObject<String, in Any>.toObject(targetClass: Class<T>): T {
 
 fun String.toIObject(): IObject<Any> = readIObject()
 
+fun <T> String.toObject(toClass: Class<T>): T = doUsingDefaultGSON {
+    it.fromJson(this, toClass)
+}
+
+fun Any.toJson(): String = when (this) {
+    is IInputObject<*, *> -> (this as? IInputObject<String, Any>) ?.toJsonString()
+    else -> null
+} ?: doUsingDefaultGSON {
+    it.toJson(this)
+}
+
 fun <K, V: Any> IInputObject<K, V>.toIObject(): IObject<Any> {
     return SimpleIObject().also {
         resultObject ->

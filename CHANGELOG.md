@@ -91,3 +91,7 @@ file from resources or file system
 ## 1.11
 
 * Update version of IObjectK and optimize some operations
+
+## 1.11.1
+
+* Add operations to convert directly JSON into object and object into JSON.

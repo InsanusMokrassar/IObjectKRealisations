@@ -4,21 +4,17 @@ import com.github.insanusmokrassar.IObjectK.extensions.toJsonString
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import com.github.insanusmokrassar.IObjectK.realisations.SimpleIObject
 import com.github.insanusmokrassar.IObjectK.utils.plus
-import org.json.JSONObject
 
 fun main(args: Array<String>) {
-    val jsonObjectExample = JSONObject()
-    jsonObjectExample.put("Hello", "World")
-    jsonObjectExample.put("InnerObject", JSONObject("{\"Inner hello\":\"World\"}"))
-    val jsonIObject = JSONIObject(jsonObjectExample)
+    val jsonIObject = ClassLoader.getSystemResourceAsStream("example.json").readIObject()
     println(jsonIObject.toString())
-    println(jsonIObject.get<IObject<Any>>("InnerObject").toString())
+    println(jsonIObject.get<IObject<Any>>("exampleInner").toString())
 
     jsonIObject.putAll(
             mapOf(
-                    Pair("Example", "Example"),
-                    Pair("Example", "Example2"),
-                    Pair("Example", "Example3")
+                    Pair("Example", true),
+                    Pair("Example2", 2),
+                    Pair("Example3", "3")
             )
     )
 
@@ -44,8 +40,8 @@ fun main(args: Array<String>) {
     }
     println(jsonIObject.toJsonString())
 
-    ClassLoader.getSystemResourceAsStream("example.xml").readIObject().toJsonString().let {
+    ClassLoader.getSystemResourceAsStream("example.xml").readIObject().let {
         println(it)
-        println(it.toIObject().toJsonString())
+        println(it.toJsonString())
     }
 }

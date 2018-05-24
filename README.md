@@ -28,7 +28,7 @@ This library was developed as realisations library for project [IObjectK](https:
 
 Here you can found realisations for
 
-* [JSONIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/JSONIObject.kt)
+* SimpleIObject from JSON (use `String#toIObject`)
 * [PropertiesIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/PropertiesIObject.kt)
 * [XMLIObject](src/main/kotlin/com/github/insanusmokrassar/IObjectKRealisations/XMLIObject.kt)
 (if be honest, it is just converter xml-to-simpleiobject)

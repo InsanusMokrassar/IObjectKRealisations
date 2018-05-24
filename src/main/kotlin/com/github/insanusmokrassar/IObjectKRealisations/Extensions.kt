@@ -5,10 +5,9 @@ import com.github.insanusmokrassar.IObjectK.interfaces.CommonIObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IInputObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import com.github.insanusmokrassar.IObjectK.interfaces.IOutputObject
+import com.github.insanusmokrassar.IObjectK.realisations.SimpleCommonIObject
 import com.github.insanusmokrassar.IObjectK.realisations.SimpleIObject
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonDeserializer
+import com.google.gson.*
 import java.io.InputStream
 import java.io.InputStreamReader
 
@@ -52,36 +51,37 @@ fun <K, V: Any> IInputObject<K, V>.toIObject(): IObject<Any> {
 
 fun Any.toIObject(): IObject<Any> {
     return doUsingDefaultGSON {
-        JSONIObject(it.toJson(this))
+        it.fromJson(it.toJson(this), SimpleIObject::class.java)
     }
 }
 
 @Throws(ReadIObjectException::class)
 fun String.readIObject(): IObject<Any> {
-    return byteInputStream().readIObject()
+    val resultExceptions = mutableListOf<Exception>()
+    try {
+        return doUsingDefaultGSON {
+            it.fromJson(this, SimpleIObject::class.java)
+        }
+    } catch (e: Exception) {
+        resultExceptions.add(Exception("Input stream $this can't be read as json: ${e.message}\n${e.stackTrace}", e))
+    }
+    try {
+        return XMLIObject(this)
+    } catch (e: Exception) {
+        resultExceptions.add(Exception("Input stream $this can't be read as xml: ${e.message}\n${e.stackTrace}"))
+    }
+    try {
+        return PropertiesIObject(this)
+    } catch (e: Exception) {
+        resultExceptions.add(Exception("Input stream $this can't be read as properties: ${e.message}\n${e.stackTrace}"))
+    }
+    throw ReadIObjectException(resultExceptions)
 }
 
 @Throws(ReadIObjectException::class)
 fun InputStream.readIObject(): IObject<Any> {
     try {
-        var resultExceptions = mutableListOf<Exception>()
-        val streamText = InputStreamReader(this).readText()
-        try {
-            return JSONIObject(streamText)
-        } catch (e: Exception) {
-            resultExceptions.add(Exception("Input stream $this can't be read as json: ${e.message}\n${e.stackTrace}", e))
-        }
-        try {
-            return XMLIObject(streamText)
-        } catch (e: Exception) {
-            resultExceptions.add(Exception("Input stream $this can't be read as xml: ${e.message}\n${e.stackTrace}"))
-        }
-        try {
-            return PropertiesIObject(streamText)
-        } catch (e: Exception) {
-            resultExceptions.add(Exception("Input stream $this can't be read as properties: ${e.message}\n${e.stackTrace}"))
-        }
-        throw ReadIObjectException(resultExceptions)
+        return InputStreamReader(this).readText().readIObject()
     } catch (e: Exception) {
         throw IllegalArgumentException("For some of reason can't read input stream $this", e)
     }
@@ -108,7 +108,7 @@ fun GsonBuilder.implementIInputObjectAdapter() {
             IInputObject::class.java,
             JsonDeserializer<IInputObject<String, Any>> {
                 json, _, _ ->
-                JSONIObject(json.asJsonObject.toString())
+                json.asJsonObject.toSimpleIObject()
             }
     )
 }
@@ -118,7 +118,7 @@ fun GsonBuilder.implementIOutputObjectAdapter() {
             IInputObject::class.java,
             JsonDeserializer<IOutputObject<String, Any>> {
                 json, _, _ ->
-                JSONIObject(json.asJsonObject.toString())
+                json.asJsonObject.toSimpleIObject()
             }
     )
 }
@@ -128,7 +128,69 @@ fun GsonBuilder.implementCommonIObjectAdapter() {
             IInputObject::class.java,
             JsonDeserializer<CommonIObject<String, Any>> {
                 json, _, _ ->
-                JSONIObject(json.asJsonObject.toString())
+                json.asJsonObject.toSimpleIObject()
             }
     )
+}
+
+private fun JsonObject.toSimpleIObject(): SimpleIObject {
+    return SimpleIObject().apply {
+        entrySet().forEach {
+            val value: Any? = if (it.value.isJsonPrimitive) {
+                val primitive = it.value.asJsonPrimitive
+                if (primitive.isBoolean) {
+                    primitive.asBoolean
+                } else {
+                    if (primitive.isNumber) {
+                        primitive.asNumber
+                    } else {
+                        primitive.asString
+                    }
+                }
+            } else {
+                if (it.value.isJsonArray) {
+                    it.value.asJsonArray.toList()
+                } else {
+                    if (it.value.isJsonObject) {
+                        it.value.asJsonObject.toSimpleIObject()
+                    } else {
+                        null
+                    }
+                }
+            }
+            value ?.let {
+                resultValue ->
+                this[it.key] = resultValue
+            }
+        }
+    }
+
+}
+
+private fun JsonArray.toList(): List<Any> {
+    return mapNotNull {
+        val value: Any? = if (it.isJsonPrimitive) {
+            val primitive = it.asJsonPrimitive
+            if (primitive.isBoolean) {
+                primitive.asBoolean
+            } else {
+                if (primitive.isNumber) {
+                    primitive.asNumber
+                } else {
+                    primitive.asString
+                }
+            }
+        } else {
+            if (it.isJsonArray) {
+                it.asJsonArray.toList()
+            } else {
+                if (it.isJsonObject) {
+                    it.asJsonObject.toSimpleIObject()
+                } else {
+                    null
+                }
+            }
+        }
+        value
+    }
 }

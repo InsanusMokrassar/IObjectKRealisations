@@ -8,6 +8,8 @@ import com.github.insanusmokrassar.IObjectK.interfaces.IOutputObject
 import com.github.insanusmokrassar.IObjectK.realisations.SimpleCommonIObject
 import com.github.insanusmokrassar.IObjectK.realisations.SimpleIObject
 import com.google.gson.*
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonWriter
 import java.io.InputStream
 import java.io.InputStreamReader
 
@@ -97,39 +99,33 @@ fun <R> doUsingDefaultGSON(callback: (Gson) -> R) : R {
 fun initGSON(): Gson {
     return GsonBuilder().run {
         implementIInputObjectAdapter()
-        implementIOutputObjectAdapter()
-        implementCommonIObjectAdapter()
+        implementIInputObjectOutputAdapter()
         create()
     }
 }
 
+fun GsonBuilder.implementIInputObjectOutputAdapter() {
+    registerTypeHierarchyAdapter(
+        IInputObject::class.java,
+        JsonSerializer<IInputObject<*, *>> {
+            src, _, context ->
+            JsonObject().apply {
+                src.forEach {
+                    val nnPair = (it.first ?: return@forEach).toString() to (it.second ?: return@forEach)
+                    add(nnPair.first, context.serialize(nnPair.second))
+                }
+            }
+        }
+    )
+}
+
 fun GsonBuilder.implementIInputObjectAdapter() {
     registerTypeHierarchyAdapter(
-            IInputObject::class.java,
-            JsonDeserializer<IInputObject<String, Any>> {
-                json, _, _ ->
-                json.asJsonObject.toSimpleIObject()
-            }
-    )
-}
-
-fun GsonBuilder.implementIOutputObjectAdapter() {
-    registerTypeHierarchyAdapter(
-            IInputObject::class.java,
-            JsonDeserializer<IOutputObject<String, Any>> {
-                json, _, _ ->
-                json.asJsonObject.toSimpleIObject()
-            }
-    )
-}
-
-fun GsonBuilder.implementCommonIObjectAdapter() {
-    registerTypeHierarchyAdapter(
-            IInputObject::class.java,
-            JsonDeserializer<CommonIObject<String, Any>> {
-                json, _, _ ->
-                json.asJsonObject.toSimpleIObject()
-            }
+        IInputObject::class.java,
+        JsonDeserializer<CommonIObject<*, *>> {
+            json, _, _ ->
+            json.asJsonObject.toSimpleIObject()
+        }
     )
 }
 

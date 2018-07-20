@@ -97,3 +97,7 @@ file from resources or file system
 * Add operations to convert directly JSON into object and object into JSON.
 * Remove `org.json` dependency and `JSONIObject`. Now for creating IObject from string just use `String#readIObject`
 or `String#toIObject`
+
+## 1.11.2
+
+* Simplify and fix library built-in `Gson` adapters

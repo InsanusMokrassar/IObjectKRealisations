@@ -21,7 +21,7 @@
     * 1.10.2
     * 1.10.3
 * 1.11
-    * 1.11.1
+    * 1.11.2
 
 ## Description
 
@@ -55,18 +55,18 @@ you can found examples of using different types of realisations of `IObject`
 <dependency>
     <groupId>com.github.insanusmokrassar</groupId>
     <artifactId>IObjectKRealisations</artifactId>
-    <version>1.11.1</version>
+    <version>1.11.2</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```
-compile 'com.github.insanusmokrassar:IObjectKRealisations:1.11.1'
+compile 'com.github.insanusmokrassar:IObjectKRealisations:1.11.2'
 ```
 
 #### Gradle (newest version)
 
 ```
-implementation 'com.github.insanusmokrassar:IObjectKRealisations:1.11.1'
+implementation 'com.github.insanusmokrassar:IObjectKRealisations:1.11.2'
 ```
